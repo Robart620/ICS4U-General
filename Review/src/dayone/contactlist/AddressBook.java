@@ -27,8 +27,7 @@ public class AddressBook {
 
 	public void displayContactList() {
 		for (int i = 0; i < numberOfContacts; i++) {
-			System.out.println(contactList[i].getFirstName() + " " + contactList[i].getLastName() + " - "
-					+ contactList[i].getPhone());
+			System.out.println(contactList[i].toString());
 		}
 	}
 	
@@ -37,8 +36,29 @@ public class AddressBook {
 		numberOfContacts++;
 	}
 	
-	public void destroyContact(Contact contact) {
-		//TODO remove the selected contact
-		numberOfContacts++;
+	public void destroy(String lastName) {
+		for(int i = 0; i < numberOfContacts; i++) {
+			if(lastName.equals(contactList[i].getLastName())) {
+				contactList[i].erase();
+				if(i != numberOfContacts) 
+					contactList[i] = contactList[numberOfContacts - 1];
+				numberOfContacts--;
+				System.out.println(lastName + " who?");
+				return;
+			}
+				
+		}
+		System.out.println("You never had a contact named " + lastName);
+		
+		
+	}
+
+	public String find(String lastName) {
+		for(int i = 0; i < numberOfContacts; i++) {
+			if(lastName.equals(contactList[i].getLastName()))
+				return contactList[i].toString();
+		}
+		return "You don't have any contacts with last name " + lastName;
+		
 	}
 }

@@ -8,49 +8,56 @@ public class AddressBookDriver {
 
 	public static void main(String[] args) {
 		AddressBook contacts = new AddressBook();
-		int result;
 
 		while (true) {
 			contacts.displayMenu();
-			result = processComand(getCommand(in.nextLine()), contacts);
+			processComand(getCommand(in.nextLine()), contacts);
 
 		}
 
 	}
 
-	private static int processComand(int id, AddressBook contacts) {
+	private static void processComand(int id, AddressBook contacts) {
 		if (id == 5) {
 			System.out.println("That is an invalid command. Try again");
-			return 0;
+			System.out.println("----------------------------");
+			return;
 		} else if (id == 0) {
 			if (contacts.getListSize() == 0) {
 				System.out.println("There ain't nothin to show");
-				return 0;
+				System.out.println("----------------------------");
+				return;
 			} else {
+				System.out.println("Your contacts are:");
 				contacts.displayContactList();
-				return 0;
+				System.out.println("----------------------------");
+				return;
 			}
 		} else if (id == 1) {
 			Contact contact = new Contact();
 			System.out.print("Please enter the first name of the new contact: ");
 			contact.setFirstName(in.nextLine());
-			System.out.println();
 			System.out.print("Please enter the last name of the new contact: ");
-			contact.setFirstName(in.nextLine());
-			System.out.println();
+			contact.setLastName(in.nextLine());		
 			System.out.print("Please enter the phone number of the new contact: ");
-			contact.setFirstName(in.nextLine());
-			System.out.println();
-
+			contact.setPhone(in.nextLine());
+			System.out.println(contact.getFirstName() + " " + contact.getLastName() + " has been added.");
+			System.out.println("----------------------------");
 			contacts.addContact(contact);
-			return 0;
+
+			return;
 		} else if(id == 2) {
 			System.out.println("Enter the last name of the person you're looking for: ");
-			in.nextLine();
-			System.out.println();
+			System.out.println(contacts.find(in.nextLine()));
+			System.out.println("----------------------------");
+			return;
+		} else if(id == 3) {
+			System.out.println("Enter the last name of the contact who has dishonored you: ");
+			contacts.destroy(in.nextLine());
+			System.out.println("----------------------------");
 		}
 
-		return 0;
+		return;
 	}
 
 	private static int getCommand(String command) {

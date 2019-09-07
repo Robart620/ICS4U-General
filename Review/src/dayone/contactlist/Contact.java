@@ -33,6 +33,16 @@ public class Contact {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	public String toString() {
+		
+		return firstName + " " + lastName + " " + phone;
+	}
+
+	public void erase() {
+		firstName = null;
+		lastName = null;
+		phone = null;
+		
+	}
 	
 }
