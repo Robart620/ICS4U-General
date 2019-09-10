@@ -7,8 +7,8 @@ public class AddressBookDriver {
 	static Scanner in = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		AddressBook contacts = new AddressBook();
-
+		ContactList contacts = new ContactList();
+		
 		while (true) {
 			contacts.displayMenu();
 			processComand(getCommand(in.nextLine()), contacts);
@@ -17,13 +17,13 @@ public class AddressBookDriver {
 
 	}
 
-	private static void processComand(int id, AddressBook contacts) {
+	private static void processComand(int id, ContactList contacts) {
 		if (id == 5) {
 			System.out.println("That is an invalid command. Try again");
 			System.out.println("----------------------------");
 			return;
 		} else if (id == 0) {
-			if (contacts.getListSize() == 0) {
+			if (contacts.size() == 0) {
 				System.out.println("There ain't nothin to show");
 				System.out.println("----------------------------");
 				return;
@@ -53,7 +53,7 @@ public class AddressBookDriver {
 			return;
 		} else if(id == 3) {
 			System.out.println("Enter the last name of the contact who has dishonored you: ");
-			contacts.destroy(in.nextLine());
+			contacts.removeContact(in.nextLine());
 			System.out.println("----------------------------");
 		}
 
