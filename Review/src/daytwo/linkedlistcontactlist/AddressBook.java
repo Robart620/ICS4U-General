@@ -1,12 +1,14 @@
 package daytwo.linkedlistcontactlist;
 
+import java.util.LinkedList;
+
 public class AddressBook {
 
 	int numberOfContacts;
-	Contact[] contactList;
+	LinkedList<Contact> contactList;
 
 	public AddressBook() {
-	    contactList = new Contact[20]; //not my problem if it runs out of space.
+	    contactList = new LinkedList<>();
 		numberOfContacts = 0;
 	}
 
@@ -27,21 +29,23 @@ public class AddressBook {
 
 	public void displayContactList() {
 		for (int i = 0; i < numberOfContacts; i++) {
-			System.out.println(contactList[i].toString());
+			System.out.println(contactList.get(i).toString());
 		}
 	}
 	
 	public void addContact(Contact contact) {
-		contactList[numberOfContacts] = contact;
+		contactList.add(contact);
 		numberOfContacts++;
 	}
 	
 	public void destroy(String lastName) {
 		for(int i = 0; i < numberOfContacts; i++) {
-			if(lastName.equals(contactList[i].getLastName())) {
-				contactList[i].erase();
-				if(i != numberOfContacts) 
-					contactList[i] = contactList[numberOfContacts - 1];
+			if(contactList.get(i).getLastName().equals(lastName)) {
+				contactList.remove(contactList.get(i));
+				if(i != numberOfContacts) {
+					contactList.add(i, contactList.getLast());
+					contactList.removeLast();
+				}
 				numberOfContacts--;
 				System.out.println(lastName + " who?");
 				return;
@@ -55,8 +59,8 @@ public class AddressBook {
 
 	public String find(String lastName) {
 		for(int i = 0; i < numberOfContacts; i++) {
-			if(lastName.equals(contactList[i].getLastName()))
-				return contactList[i].toString();
+			if(lastName.equals(contactList.get(i).getLastName()))
+				return contactList.get(i).toString();
 		}
 		return "You don't have any contacts with last name " + lastName;
 		
