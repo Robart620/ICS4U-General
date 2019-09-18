@@ -12,7 +12,9 @@ public class Board {
 		stack = new Queen[n];
 	}
 
-	void arrange() {
+	// driving method with the main while loop. Checks if the attempted solutions
+	// are within boundaries of n and -1.
+	void solve() {
 		while (numberSetQueens < n && numberSetQueens > -1) {
 			if (!placeQueen()) {
 				if (!pop())
@@ -25,25 +27,23 @@ public class Board {
 			displaySuccess();
 	}
 
+	// called to display board layout when a solution is found.
 	private void displaySuccess() {
-		int countRow = 0;
-		int countCol = 0;
-
-		while (countRow < n) {
-			countCol = 0;
-			while (countCol < n) {
+		for (int countRow = 0; countRow < n; countRow++) {
+			for (int countCol = 0; countCol < n; countCol++) {
 				if (checkPosition(countRow, countCol))
 					System.out.print(" Q ");
 				else
 					System.out.print(" x ");
-				countCol++;
+
 			}
 			System.out.println();
-			countRow++;
+
 		}
 
 	}
 
+	// checks if a queen has been assigned to the position being checked.
 	private boolean checkPosition(int countRow, int countCol) {
 		for (int i = 0; i < n; i++) {
 			if (stack[i].getCol() == countCol && stack[i].getRow() == countRow)
@@ -52,11 +52,15 @@ public class Board {
 		return false;
 	}
 
+	// displays that the 'n' does not have a solution.
 	private void displayFailure() {
 		System.out.println("There is no nQueens solution for n = " + n);
 
 	}
 
+	// tries to place a queen on the board without it being attacked. returns true
+	// if
+	// it can be done.
 	private boolean placeQueen() {
 		Queen current;
 		try {
@@ -76,6 +80,7 @@ public class Board {
 		return false;
 	}
 
+	// checks if a the queen being placed is being attacked by any existing queens.
 	private boolean isConflicting(Queen current) {
 		if (numberSetQueens == 0)
 			return false;
@@ -89,6 +94,7 @@ public class Board {
 		return false;
 	}
 
+	// checks if the queen being placed is diagonal to any placed queens
 	private boolean isDiagonal(Queen current, Queen setQueen) {
 		for (int i = 0; i > -1 && i < n; i++) {
 			if ((setQueen.getCol() + i == current.getCol() && setQueen.getRow() + i == current.getRow())
@@ -98,6 +104,7 @@ public class Board {
 		return false;
 	}
 
+	// returns the queen at the top of the stack
 	public Queen peek() {
 		if (stack[0] == null)
 			throw new IllegalStateException("You really goofed this one up");
@@ -106,6 +113,8 @@ public class Board {
 		return stack[numberSetQueens];
 	}
 
+	// removes the queen at the top of the stack and assigns that spot in the array
+	// as null, returns true if there was a queen to remove, false otherwise.
 	public boolean pop() {
 		stack[numberSetQueens] = null;
 		numberSetQueens--;
@@ -114,12 +123,8 @@ public class Board {
 		return true;
 	}
 
-	public boolean isEmpty() {
-		return numberSetQueens == 0;
-	}
-
+	// adds the queen which is passed in to the top of the stack
 	public void push(Queen x) {
 		stack[numberSetQueens++] = x;
-
 	}
 }
