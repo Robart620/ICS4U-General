@@ -123,7 +123,7 @@ public class Board {
 		return true;
 	}
 
-	// adds the queen which is passed in to the top of the stack
+	// adds the queen which is passed in to the top of the stack.
 	public void push(Queen x) {
 		stack[numberSetQueens++] = x;
 	}
