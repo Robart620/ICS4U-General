@@ -4,7 +4,7 @@ public class NQueensDriver {
 
 	public static void main(String[] args) {
 		
-		int n = 10;
+		int n = 5;
 		
 		Board board = new Board(n);
 		board.solve();

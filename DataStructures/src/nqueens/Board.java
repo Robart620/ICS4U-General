@@ -2,29 +2,48 @@ package nqueens;
 
 public class Board {
 
-	private int numberSetQueens;
-	private Queen[] stack;
+	private Stack stack;
 	private int n;
 
 	Board(int n) {
 		this.n = n;
-		numberSetQueens = 0;
-		stack = new Queen[n];
+		stack = new Stack(n);
 	}
 
 	// driving method with the main while loop. Checks if the attempted solutions
 	// are within boundaries of n and -1.
 	void solve() {
-		while (numberSetQueens < n && numberSetQueens > -1) {
+		while (stack.getNumberElements() < n && stack.getNumberElements() > -1) {
 			if (!placeQueen()) {
-				if (!pop())
+
+				try {
+					while (!replaceQueen())
+						stack.pop();
+				} catch (Exception ex) {
 					break;
+				}
 			}
 		}
-		if (numberSetQueens <= 0)
+		if (stack.getNumberElements() <= 0)
 			displayFailure();
 		else
 			displaySuccess();
+	}
+
+	// replaces queen at the top of the stack with a queen adjacent to the one being
+	// replaced. Returns false if it cannot be done
+	private boolean replaceQueen() {
+		Queen current = new Queen(stack.peek().getRow() + 1, stack.pop().getCol());
+
+		boolean isPlaced = false;
+		while (!isPlaced && current.getRow() < n) {
+			if (!isConflicting(current)) {
+				stack.push(current);
+				return true;
+			}
+			current = new Queen(current.getRow() + 1, stack.getNumberElements());
+		}
+		return false;
 	}
 
 	// called to display board layout when a solution is found.
@@ -45,11 +64,19 @@ public class Board {
 
 	// checks if a queen has been assigned to the position being checked.
 	private boolean checkPosition(int countRow, int countCol) {
-		for (int i = 0; i < n; i++) {
-			if (stack[i].getCol() == countCol && stack[i].getRow() == countRow)
-				return true;
+		Stack temp = new Stack(n);
+
+		boolean hasQueen = false;
+		while (stack.getNumberElements() > 0) {
+			temp.push(stack.pop());
+			if (temp.peek().getCol() == countCol && temp.peek().getRow() == countRow) {
+				hasQueen = true;
+				break;
+			}
 		}
-		return false;
+		while (temp.getNumberElements() > 0)
+			stack.push(temp.pop());
+		return hasQueen;
 	}
 
 	// displays that the 'n' does not have a solution.
@@ -58,40 +85,44 @@ public class Board {
 
 	}
 
-	// tries to place a queen on the board without it being attacked. returns true
-	// if
-	// it can be done.
+	// tries to place a new queen on the board, checking every position available in
+	// one column. returns false if there is no space in the column where the queen
+	// is not being attacked
 	private boolean placeQueen() {
-		Queen current;
-		try {
-			current = new Queen(peek().getRow() + 1, numberSetQueens);
-		} catch (Exception ex) {
-			current = new Queen(0, numberSetQueens);
-		}
+
+		Queen current = new Queen(0, stack.getNumberElements());
 
 		boolean isPlaced = false;
 		while (!isPlaced && current.getRow() < n) {
 			if (!isConflicting(current)) {
-				push(current);
+				stack.push(current);
 				return true;
 			}
-			current = new Queen(current.getRow() + 1, numberSetQueens);
+			current = new Queen(current.getRow() + 1, stack.getNumberElements());
 		}
 		return false;
 	}
 
 	// checks if a the queen being placed is being attacked by any existing queens.
 	private boolean isConflicting(Queen current) {
-		if (numberSetQueens == 0)
+		if (stack.getNumberElements() == 0)
 			return false;
-		for (int i = 0; i < numberSetQueens; i++) {
-			if (stack[i].getRow() == current.getRow())
-				return true;
-			else if (isDiagonal(current, stack[i]))
-				return true;
 
+		Stack temp = new Stack(n);
+
+		int numberConflicts = 0;
+		while (stack.getNumberElements() > 0) {
+			temp.push(stack.pop());
+			if (temp.peek().getCol() == current.getCol() || temp.peek().getRow() == current.getRow())
+				numberConflicts++;
+			else if (isDiagonal(current, temp.peek()))
+				numberConflicts++;
 		}
-		return false;
+		while (temp.getNumberElements() > 0) {
+			stack.push(temp.pop());
+		}
+
+		return numberConflicts > 0;
 	}
 
 	// checks if the queen being placed is diagonal to any placed queens
@@ -104,27 +135,4 @@ public class Board {
 		return false;
 	}
 
-	// returns the queen at the top of the stack
-	public Queen peek() {
-		if (stack[0] == null)
-			throw new IllegalStateException("You really goofed this one up");
-		else if (numberSetQueens == 0)
-			return stack[0];
-		return stack[numberSetQueens];
-	}
-
-	// removes the queen at the top of the stack and assigns that spot in the array
-	// as null, returns true if there was a queen to remove, false otherwise.
-	public boolean pop() {
-		stack[numberSetQueens] = null;
-		numberSetQueens--;
-		if (numberSetQueens < 0)
-			return false;
-		return true;
-	}
-
-	// adds the queen which is passed in to the top of the stack.
-	public void push(Queen x) {
-		stack[numberSetQueens++] = x;
-	}
 }
