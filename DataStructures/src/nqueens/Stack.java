@@ -35,3 +35,4 @@ public class Stack {
 		data[numberElements++] = x;
 	}
 }
+
