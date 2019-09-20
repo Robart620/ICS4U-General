@@ -14,7 +14,7 @@ public class Board {
 	// are within boundaries of n and -1.
 	void solve() {
 		while (stack.getNumberElements() < n && stack.getNumberElements() > -1) {
-			if (!placeQueen()) {
+			if (!placeNewQueen()) {
 
 				try {
 					while (!replaceQueen())
@@ -88,7 +88,7 @@ public class Board {
 	// tries to place a new queen on the board, checking every position available in
 	// one column. returns false if there is no space in the column where the queen
 	// is not being attacked
-	private boolean placeQueen() {
+	private boolean placeNewQueen() {
 
 		Queen current = new Queen(0, stack.getNumberElements());
 
