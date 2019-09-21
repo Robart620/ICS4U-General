@@ -35,20 +35,22 @@ public class PostfixEvaluator {
 				}
 			}
 		}
-		if(stack.numberElements == 1)
+		int temp = stack.pop();
+		if (stack.isEmpty()) {
+			stack.push(temp);
 			operationSuccess();
-		else
+		} else
 			operationFailed();
 
 	}
-	
+
 	private void assignExpression(String expression) {
-		for(int i = 0; i < segmentedExpression.length; i++) {
+		for (int i = 0; i < segmentedExpression.length; i++) {
 			segmentedExpression[i] = expression.split(" ")[i];
 		}
-		
+
 	}
-	
+
 	private void operationSuccess() {
 		System.out.println("The result is: " + stack.pop());
 	}

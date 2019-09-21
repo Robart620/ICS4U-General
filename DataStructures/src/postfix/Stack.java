@@ -3,7 +3,7 @@ package postfix;
 public class Stack {
 	
 	private int[] data;
-	public int numberElements;
+	private int numberElements;
 	
 	@SuppressWarnings("unused")
 	public Stack() {
@@ -26,8 +26,8 @@ public class Stack {
 	}
 	public boolean isEmpty() {
 		if(numberElements == 0) {
-			return false;
-		} return true;
+			return true;
+		} return false;
 	}
 	
 	public int pop() {
