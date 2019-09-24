@@ -18,13 +18,21 @@ public class PostfixEvaluator {
 			} catch (Exception ex) {
 				try {
 					if (segmentedExpression[i].equals("+")) {
-						stack.push(stack.pop() + stack.pop());
+						int a = stack.pop();
+						int b = stack.pop();
+						stack.push(b + a);
 					} else if (segmentedExpression[i].equals("-")) {
-						stack.push(stack.pop() - stack.pop());
+						int a = stack.pop();
+						int b = stack.pop();
+						stack.push(b - a);
 					} else if (segmentedExpression[i].equals("*")) {
-						stack.push(stack.pop() * stack.pop());
+						int a = stack.pop();
+						int b = stack.pop();
+						stack.push(b * a);
 					} else if (segmentedExpression[i].equals("/")) {
-						stack.push(stack.pop() / stack.pop());
+						int a = stack.pop();
+						int b = stack.pop();
+						stack.push(b / a);
 					} else {
 						operationFailed();
 						return;

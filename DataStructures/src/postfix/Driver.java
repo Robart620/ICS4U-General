@@ -5,7 +5,7 @@ public class Driver {
 	private static String expression;
 	
 	public static void main(String[] args) {
-		expression = "2 3 9 + * 11 +";
+		expression = "10 2 8 * + 3 -";
 		PostfixEvaluator pE = new PostfixEvaluator(expression);
 		pE.evaluate();
 
