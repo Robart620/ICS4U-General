@@ -16,6 +16,10 @@ public class IntBinaryTreeNode {
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
 	}
+	
+	public boolean hasChildren() {
+		return leftChild != null || rightChild !=null; 
+	}
 
 	public boolean hasLeft() {
 		return leftChild != null;

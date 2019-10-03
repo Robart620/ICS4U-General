@@ -8,7 +8,19 @@ public class Driver {
 
 
 	public static void main(String[] args) throws FileNotFoundException {
-		createTree("dataFiles/treeData.dat").inOrderTraversal();
+		IntBST tree = createTree("dataFiles/treeData.dat");
+		tree.inOrderTraversal();
+		System.out.println();
+		tree.delete(7);
+		tree.delete(5);
+		tree.delete(14);
+		tree.delete(9);
+		tree.inOrderTraversal();
+		tree.delete(2);
+		tree.delete(3);
+		tree.inOrderTraversal();
+		System.out.println();
+		tree.delete(29);
 
 	}
 
