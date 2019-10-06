@@ -12,6 +12,55 @@ public class IntBST {
 		this.root = null;
 	}
 
+	public boolean hasInt(Integer x) {
+		if (root == null) {
+			return false;
+		}
+
+		if (root.getData() == x) {
+			return true;
+		}
+
+		if (x < root.getData()) {
+			if (root.hasLeft()) {
+				return hasInt(x, root.getLeftChild());
+			} else {
+				return false;
+			}
+		} else if (x > root.getData()) {
+			if (root.hasRight()) {
+				hasInt(x, root.getRightChild());
+			} else {
+				return false;
+			}
+		}
+		
+		return false;
+	}
+
+	private boolean hasInt(Integer x, IntBinaryTreeNode root) {
+		if (root.getData() == x) {
+			return true;
+		}
+
+		if (x < root.getData()) {
+			if (root.hasLeft()) {
+				return hasInt(x, root.getLeftChild());
+			} else {
+				return false;
+			}
+		} else if (x > root.getData()) {
+			if (root.hasRight()) {
+				hasInt(x, root.getRightChild());
+			} else {
+				return false;
+			}
+		}
+		
+		return false;
+	}
+		
+
 	public void addInt(Integer data) {
 		if (root == null) {
 			root = new IntBinaryTreeNode(data);
@@ -109,15 +158,14 @@ public class IntBST {
 		}
 
 	}
-	
-	//TODO Halp
+
+	// TODO Halp
 	public boolean refactor() {
 		if (root == null)
 			return false;
-		
+
 		return false;
 	}
-	
 
 	public void processNode(IntBinaryTreeNode node) {
 		System.out.println(node.getData());

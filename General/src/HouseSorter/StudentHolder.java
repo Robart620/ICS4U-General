@@ -47,6 +47,12 @@ public class StudentHolder {
 					getPointsFromGrade(studentID);
 				} else if (masterStudentNameLastInitMap.get(studentID) != null) {
 					getPointsFromInit(studentID);
+				} else if (masterStudentNameMap.get(studentID.substring(0, studentID.length() - 1)) != null) {
+					getShirtPointsFromName(studentID.substring(0, studentID.length() - 1));
+				} else if (masterStudentGradeMap.get(studentID.substring(0, studentID.length() - 1)) != null) {
+					getShirtPointsFromGrade(studentID.substring(0, studentID.length() - 1));
+				} else if (masterStudentNameLastInitMap.get(studentID.substring(0, studentID.length() - 1)) != null) {
+					getShirtPointsFromInit(studentID.substring(0, studentID.length() - 1));
 				} else {
 					namesNotFound.add(student);
 				}
@@ -56,6 +62,24 @@ public class StudentHolder {
 			System.out.println("There was a problem with the input document");
 		}
 
+	}
+
+	private void getShirtPointsFromInit(String studentID) {
+		String house = masterStudentNameLastInitMap.get(studentID).getHouse();
+		assignPoints(house);		
+		assignPoints(house);
+	}
+
+	private void getShirtPointsFromGrade(String studentID) {
+		String house = masterStudentGradeMap.get(studentID).getHouse();
+		assignPoints(house);		
+		assignPoints(house);
+	}
+
+	private void getShirtPointsFromName(String studentID) {
+		String house = masterStudentNameMap.get(studentID).getHouse();
+		assignPoints(house);
+		assignPoints(house);
 	}
 
 	private void getPointsFromInit(String studentID) {
@@ -72,6 +96,7 @@ public class StudentHolder {
 	private void getPointsFromName(String studentID) {
 		String house = masterStudentNameMap.get(studentID).getHouse();
 		assignPoints(house);
+		
 
 	}
 
